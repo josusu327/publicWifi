@@ -26,50 +26,45 @@
 		</form>
 
 		<%
-            // LAT와 LNT 값을 가져옴
-            String latParam = request.getParameter("lat");
-            String lntParam = request.getParameter("lnt");
-
-            if (latParam != null && lntParam != null) {
-                double lat = Double.parseDouble(latParam);
-                double lnt = Double.parseDouble(lntParam);
-
-                // 히스토리 저장
-                WifiService.saveHistory(lat, lnt);
-
-                // 히스토리 목록 가져오기
-                List<History> historyList = WifiService.getHistoryList();
+    // 히스토리 목록 가져오기
+    List<History> historyList = WifiService.getHistoryList();
+%>
+<h2>히스토리 목록</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>X좌표</th>
+            <th>Y좌표</th>
+            <th>조회일자</th>
+            <th>비고</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%
+            if (historyList != null && !historyList.isEmpty()) {
+                for (History history : historyList) {
         %>
-		<h2>히스토리 목록</h2>
-		<table>
-			<thead>
-				<tr>
-	                <th>ID</th>
-	                <th>X좌표</th>
-	                <th>Y좌표</th>
-	                <th>조회일자</th>
-	                <th>비고</th>
-            	</tr>
-			</thead>
-			<tbody>
-				<%
-                    for (History history : historyList) {
-                %>
-				<tr>
-	                <td><%= history.getId() %></td>
-	                <td><%= history.getLnt() %></td>
-	                <td><%= history.getLat() %></td>
-	                <td><%= history.getCreatedTime() %></td>
-	                <td><button onclick="deleteHistory(<%= history.getId() %>)">삭제</button></td>
-            	</tr>
-				<%
-                    }
-                %>
-			</tbody>
-		</table>
-		<%
+        <tr>
+            <td><%= history.getId() %></td>
+            <td><%= history.getLnt() %></td>
+            <td><%= history.getLat() %></td>
+            <td><%= history.getCreatedTime() %></td>
+            <td><button onclick="deleteHistory(<%= history.getId() %>)">삭제</button></td>
+        </tr>
+        <%
+                }
+            } else {
+        %>
+        <tr>
+            <td colspan="5">저장된 히스토리가 없습니다.</td>
+        </tr>
+        <%
             }
         %>
+    </tbody>
+</table>
+
 	</div>
 </body>
 

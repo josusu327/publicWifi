@@ -259,7 +259,7 @@ public class WifiService {
 	// 히스토리 목록 보기
     public static List<History> getHistoryList() {
         List<History> historyList = new ArrayList<>();
-        String sql = "SELECT ID, LAT, LNT, CREATED_TIME FROM HISTORY ORDER BY CREATED_TIME DESC";
+        String sql = "SELECT * FROM HISTORY ORDER BY ID DESC";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
