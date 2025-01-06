@@ -25,20 +25,6 @@ public class WifiData {
 	public WifiData() {
 	}
 
-//	public WifiData() {
-//		// 1. 기존 데이터 삭제
-////		WifiService.deleteAllWifiData(); // 모든 기존 와이파이 데이터를 삭제
-//
-//		// 2. ApiExplorer 실행 (main 메서드 호출)
-//        try {
-//            ApiExplorer.main(new String[0]);
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//		// 3. Wifi 데이터 개수 가져오기
-//		this.wifiCount = WifiService.getWifiDataCount();
-//	}
-
 	// 모든 필드를 포함한 생성자
 	public WifiData(String mgrNo, String wrdofc, String mainNm, String adres1, String adres2, String instlFloor,
 			String instlTy, String instlMby, String svcSe, String cmcwr, Integer cnstcYear, String inoutDoor,
@@ -206,3 +192,18 @@ public class WifiData {
 	}
 
 }
+
+
+//public WifiData() {
+//// 1. 기존 데이터 삭제
+////WifiService.deleteAllWifiData(); // 모든 기존 와이파이 데이터를 삭제
+//
+//// 2. ApiExplorer 실행 (main 메서드 호출)
+//try {
+//    ApiExplorer.main(new String[0]);
+//} catch (IOException | InterruptedException e) {
+//    e.printStackTrace();
+//}
+//// 3. Wifi 데이터 개수 가져오기
+//this.wifiCount = WifiService.getWifiDataCount();
+//}

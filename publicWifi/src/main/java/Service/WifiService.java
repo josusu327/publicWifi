@@ -31,59 +31,114 @@ public class WifiService {
 	}
 
 	// 공공와이파이 데이터 저장 메서드
-	public static void saveWifiData(String mgrNo, String wrdofc, String mainNm, String adres1, String adres2,
-	        String instlFloor, String instlTy, String instlMby, String svcSe, String cmcwr, Integer cnstcYear,
-	        String inoutDoor, String remars3, double lnt, double lat, String workDttm) {
+//	public static void saveWifiData(String mgrNo, String wrdofc, String mainNm, String adres1, String adres2,
+//	        String instlFloor, String instlTy, String instlMby, String svcSe, String cmcwr, Integer cnstcYear,
+//	        String inoutDoor, String remars3, double lnt, double lat, String workDttm) {
+//	    String sql = "INSERT INTO WIFI (X_SWIFI_MGR_NO, X_SWIFI_WRDOFC, X_SWIFI_MAIN_NM, X_SWIFI_ADRES1, "
+//	            + "X_SWIFI_ADRES2, X_SWIFI_INSTL_FLOOR, X_SWIFI_INSTL_TY, X_SWIFI_INSTL_MBY, "
+//	            + "X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, "
+//	            + "X_SWIFI_REMARS3, LNT, LAT, WORK_DTTM) "
+//	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+//	            + "ON DUPLICATE KEY UPDATE "
+//	            + "X_SWIFI_WRDOFC = VALUES(X_SWIFI_WRDOFC), "
+//	            + "X_SWIFI_MAIN_NM = VALUES(X_SWIFI_MAIN_NM), "
+//	            + "X_SWIFI_ADRES1 = VALUES(X_SWIFI_ADRES1), "
+//	            + "X_SWIFI_ADRES2 = VALUES(X_SWIFI_ADRES2), "
+//	            + "X_SWIFI_INSTL_FLOOR = VALUES(X_SWIFI_INSTL_FLOOR), "
+//	            + "X_SWIFI_INSTL_TY = VALUES(X_SWIFI_INSTL_TY), "
+//	            + "X_SWIFI_INSTL_MBY = VALUES(X_SWIFI_INSTL_MBY), "
+//	            + "X_SWIFI_SVC_SE = VALUES(X_SWIFI_SVC_SE), "
+//	            + "X_SWIFI_CMCWR = VALUES(X_SWIFI_CMCWR), "
+//	            + "X_SWIFI_CNSTC_YEAR = VALUES(X_SWIFI_CNSTC_YEAR), "
+//	            + "X_SWIFI_INOUT_DOOR = VALUES(X_SWIFI_INOUT_DOOR), "
+//	            + "X_SWIFI_REMARS3 = VALUES(X_SWIFI_REMARS3), "
+//	            + "LNT = VALUES(LNT), "
+//	            + "LAT = VALUES(LAT), "
+//	            + "WORK_DTTM = VALUES(WORK_DTTM)";
+//
+//	    try (Connection connection = getConnection();
+//	            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//
+//	        // 파라미터 설정
+//	        preparedStatement.setString(1, mgrNo);
+//	        preparedStatement.setString(2, wrdofc);
+//	        preparedStatement.setString(3, mainNm);
+//	        preparedStatement.setString(4, adres1);
+//	        preparedStatement.setString(5, adres2);
+//	        preparedStatement.setString(6, instlFloor);
+//	        preparedStatement.setString(7, instlTy);
+//	        preparedStatement.setString(8, instlMby);
+//	        preparedStatement.setString(9, svcSe);
+//	        preparedStatement.setString(10, cmcwr);
+//	        preparedStatement.setObject(11, cnstcYear); // null 가능
+//	        preparedStatement.setString(12, inoutDoor);
+//	        preparedStatement.setString(13, remars3);
+//	        preparedStatement.setDouble(14, lnt);
+//	        preparedStatement.setDouble(15, lat);
+//	        preparedStatement.setString(16, workDttm);
+//
+//	        // SQL 실행
+//	        int rowsInserted = preparedStatement.executeUpdate();
+//
+//	    } catch (SQLException e) {
+//	        System.err.println("데이터 삽입 중 오류 발생: " + e.getMessage());
+//	    }
+//	}
+	
+	public static void saveWifiDataBatch(List<WifiData> wifiDataList) {
 	    String sql = "INSERT INTO WIFI (X_SWIFI_MGR_NO, X_SWIFI_WRDOFC, X_SWIFI_MAIN_NM, X_SWIFI_ADRES1, "
-	            + "X_SWIFI_ADRES2, X_SWIFI_INSTL_FLOOR, X_SWIFI_INSTL_TY, X_SWIFI_INSTL_MBY, "
-	            + "X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, "
-	            + "X_SWIFI_REMARS3, LNT, LAT, WORK_DTTM) "
-	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
-	            + "ON DUPLICATE KEY UPDATE "
-	            + "X_SWIFI_WRDOFC = VALUES(X_SWIFI_WRDOFC), "
-	            + "X_SWIFI_MAIN_NM = VALUES(X_SWIFI_MAIN_NM), "
-	            + "X_SWIFI_ADRES1 = VALUES(X_SWIFI_ADRES1), "
-	            + "X_SWIFI_ADRES2 = VALUES(X_SWIFI_ADRES2), "
-	            + "X_SWIFI_INSTL_FLOOR = VALUES(X_SWIFI_INSTL_FLOOR), "
-	            + "X_SWIFI_INSTL_TY = VALUES(X_SWIFI_INSTL_TY), "
-	            + "X_SWIFI_INSTL_MBY = VALUES(X_SWIFI_INSTL_MBY), "
-	            + "X_SWIFI_SVC_SE = VALUES(X_SWIFI_SVC_SE), "
-	            + "X_SWIFI_CMCWR = VALUES(X_SWIFI_CMCWR), "
-	            + "X_SWIFI_CNSTC_YEAR = VALUES(X_SWIFI_CNSTC_YEAR), "
-	            + "X_SWIFI_INOUT_DOOR = VALUES(X_SWIFI_INOUT_DOOR), "
-	            + "X_SWIFI_REMARS3 = VALUES(X_SWIFI_REMARS3), "
-	            + "LNT = VALUES(LNT), "
-	            + "LAT = VALUES(LAT), "
-	            + "WORK_DTTM = VALUES(WORK_DTTM)";
+	               + "X_SWIFI_ADRES2, X_SWIFI_INSTL_FLOOR, X_SWIFI_INSTL_TY, X_SWIFI_INSTL_MBY, "
+	               + "X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, "
+	               + "X_SWIFI_REMARS3, LNT, LAT, WORK_DTTM) "
+	               + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+	               + "ON DUPLICATE KEY UPDATE "
+	               + "X_SWIFI_WRDOFC = VALUES(X_SWIFI_WRDOFC), "
+	               + "X_SWIFI_MAIN_NM = VALUES(X_SWIFI_MAIN_NM), "
+	               + "X_SWIFI_ADRES1 = VALUES(X_SWIFI_ADRES1), "
+	               + "X_SWIFI_ADRES2 = VALUES(X_SWIFI_ADRES2), "
+	               + "X_SWIFI_INSTL_FLOOR = VALUES(X_SWIFI_INSTL_FLOOR), "
+	               + "X_SWIFI_INSTL_TY = VALUES(X_SWIFI_INSTL_TY), "
+	               + "X_SWIFI_INSTL_MBY = VALUES(X_SWIFI_INSTL_MBY), "
+	               + "X_SWIFI_SVC_SE = VALUES(X_SWIFI_SVC_SE), "
+	               + "X_SWIFI_CMCWR = VALUES(X_SWIFI_CMCWR), "
+	               + "X_SWIFI_CNSTC_YEAR = VALUES(X_SWIFI_CNSTC_YEAR), "
+	               + "X_SWIFI_INOUT_DOOR = VALUES(X_SWIFI_INOUT_DOOR), "
+	               + "X_SWIFI_REMARS3 = VALUES(X_SWIFI_REMARS3), "
+	               + "LNT = VALUES(LNT), "
+	               + "LAT = VALUES(LAT), "
+	               + "WORK_DTTM = VALUES(WORK_DTTM)";
 
 	    try (Connection connection = getConnection();
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-	        // 파라미터 설정
-	        preparedStatement.setString(1, mgrNo);
-	        preparedStatement.setString(2, wrdofc);
-	        preparedStatement.setString(3, mainNm);
-	        preparedStatement.setString(4, adres1);
-	        preparedStatement.setString(5, adres2);
-	        preparedStatement.setString(6, instlFloor);
-	        preparedStatement.setString(7, instlTy);
-	        preparedStatement.setString(8, instlMby);
-	        preparedStatement.setString(9, svcSe);
-	        preparedStatement.setString(10, cmcwr);
-	        preparedStatement.setObject(11, cnstcYear); // null 가능
-	        preparedStatement.setString(12, inoutDoor);
-	        preparedStatement.setString(13, remars3);
-	        preparedStatement.setDouble(14, lnt);
-	        preparedStatement.setDouble(15, lat);
-	        preparedStatement.setString(16, workDttm);
+	        for (WifiData wifiData : wifiDataList) {
+	            preparedStatement.setString(1, wifiData.getMgrNo());
+	            preparedStatement.setString(2, wifiData.getWrdofc());
+	            preparedStatement.setString(3, wifiData.getMainNm());
+	            preparedStatement.setString(4, wifiData.getAdres1());
+	            preparedStatement.setString(5, wifiData.getAdres2());
+	            preparedStatement.setString(6, wifiData.getInstlFloor());
+	            preparedStatement.setString(7, wifiData.getInstlTy());
+	            preparedStatement.setString(8, wifiData.getInstlMby());
+	            preparedStatement.setString(9, wifiData.getSvcSe());
+	            preparedStatement.setString(10, wifiData.getCmcwr());
+	            preparedStatement.setObject(11, wifiData.getCnstcYear());
+	            preparedStatement.setString(12, wifiData.getInoutDoor());
+	            preparedStatement.setString(13, wifiData.getRemars3());
+	            preparedStatement.setDouble(14, wifiData.getLnt());
+	            preparedStatement.setDouble(15, wifiData.getLat());
+	            preparedStatement.setString(16, wifiData.getWorkDttm());
 
-	        // SQL 실행
-	        int rowsInserted = preparedStatement.executeUpdate();
+	            preparedStatement.addBatch();
+	        }
+
+	        preparedStatement.executeBatch();
 
 	    } catch (SQLException e) {
-	        System.err.println("데이터 삽입 중 오류 발생: " + e.getMessage());
+	        System.err.println("데이터 배치 삽입 중 오류 발생: " + e.getMessage());
 	    }
 	}
+
 
 
 	// 와이파이 데이터 개수를 반환하는 메서드
