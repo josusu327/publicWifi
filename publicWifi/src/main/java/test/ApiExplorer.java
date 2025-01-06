@@ -19,6 +19,11 @@ public class ApiExplorer {
     private static final HttpClient client = HttpClient.newHttpClient();
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        fetchAndSaveWifiData(); // 메서드 호출
+    }
+
+    // 새로운 메서드: 데이터를 가져와 저장
+    public static void fetchAndSaveWifiData() throws IOException, InterruptedException {
         String baseUrl = "http://openapi.seoul.go.kr:8088";
         String apiKey = "546c6869517768743638665976714f"; // 인증키
         String serviceName = "TbPublicWifiInfo";
@@ -63,40 +68,6 @@ public class ApiExplorer {
         return Integer.parseInt(responseBody.substring(startIndex, endIndex).trim());
     }
 
-//    private static void parseAndSaveWifiData(String responseBody) {
-//        String[] wifiEntries = responseBody.split("},\\{");
-//        for (String entry : wifiEntries) {
-//            try {
-//                String mgrNo = extractJsonField(entry, "X_SWIFI_MGR_NO");
-//                String wrdofc = extractJsonField(entry, "X_SWIFI_WRDOFC");
-//                String mainNm = extractJsonField(entry, "X_SWIFI_MAIN_NM");
-//                String adres1 = extractJsonField(entry, "X_SWIFI_ADRES1");
-//                String adres2 = extractJsonField(entry, "X_SWIFI_ADRES2");
-//                String instlFloor = extractJsonField(entry, "X_SWIFI_INSTL_FLOOR");
-//                String instlTy = extractJsonField(entry, "X_SWIFI_INSTL_TY");
-//                String instlMby = extractJsonField(entry, "X_SWIFI_INSTL_MBY");
-//                String svcSe = extractJsonField(entry, "X_SWIFI_SVC_SE");
-//                String cmcwr = extractJsonField(entry, "X_SWIFI_CMCWR");
-//                Integer cnstcYear = extractJsonField(entry, "X_SWIFI_CNSTC_YEAR") != null
-//                        ? Integer.parseInt(extractJsonField(entry, "X_SWIFI_CNSTC_YEAR"))
-//                        : null;
-//                String inoutDoor = extractJsonField(entry, "X_SWIFI_INOUT_DOOR");
-//                String remars3 = extractJsonField(entry, "X_SWIFI_REMARS3");
-//                double lnt = extractJsonField(entry, "LNT") != null
-//                        ? Double.parseDouble(extractJsonField(entry, "LNT"))
-//                        : 0.0;
-//                double lat = extractJsonField(entry, "LAT") != null
-//                        ? Double.parseDouble(extractJsonField(entry, "LAT"))
-//                        : 0.0;
-//                String workDttm = extractJsonField(entry, "WORK_DTTM");
-//
-//                WifiService.saveWifiData(mgrNo, wrdofc, mainNm, adres1, adres2, instlFloor, instlTy, instlMby, svcSe,
-//                        cmcwr, cnstcYear, inoutDoor, remars3, lnt, lat, workDttm);
-//            } catch (Exception e) {
-//                System.err.println("Error saving Wi-Fi data: " + e.getMessage());
-//            }
-//        }
-//    }
     private static void parseAndSaveWifiData(String responseBody) {
         // Wi-Fi 데이터를 저장할 리스트 생성
         List<WifiData> wifiDataList = new ArrayList<>();
