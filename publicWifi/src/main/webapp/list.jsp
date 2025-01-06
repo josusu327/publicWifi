@@ -25,8 +25,6 @@
         </form>
         
         
-        <!-- 위치 히스토리 저장한게 history db로 저장되지 않음. -->
-
         <%
             // LAT와 LNT 값을 가져옴
             String latParam = request.getParameter("lat");
@@ -127,10 +125,6 @@
         document.getElementById("lnt").value = lnt;
         document.getElementById("lat").value = lat;
 
-        // 위치 정보를 서버로 전송하여 DB에 저장
-        fetch("list.jsp?lat=" + lat + "&lnt=" + lnt)
-            .then(response => response.text())
-            .then(data => console.log(data)); // 서버 응답 출력 (디버깅용)
     }
 
     // 위치를 가져오는 데 실패했을 때 실행되는 함수

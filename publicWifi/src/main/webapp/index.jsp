@@ -70,10 +70,6 @@
         document.getElementById("lnt").value = lnt;
         document.getElementById("lat").value = lat;
 
-        // 위치 정보를 서버로 전송하여 DB에 저장
-        fetch("list.jsp?lat=" + lat + "&lnt=" + lnt)
-            .then(response => response.text())
-            .then(data => console.log(data)); // 서버 응답 출력 (디버깅용)
     }
 
     // 위치를 가져오는 데 실패했을 때 실행되는 함수
