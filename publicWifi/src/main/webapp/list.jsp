@@ -17,12 +17,15 @@
             <a href="history.jsp">위치 히스토리 목록</a>
             <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
         </div>
-        <form>
+        <form action="list.jsp" method="get">
             LNT : <input type="text" placeholder="LNT: 0.0" name="lnt" id="lnt" value="<%= request.getParameter("lnt") != null ? request.getParameter("lnt") : "" %>" readonly>
             LAT : <input type="text" placeholder="LAT: 0.0" name="lat" id="lat" value="<%= request.getParameter("lat") != null ? request.getParameter("lat") : "" %>" readonly> 
             <button type="button" onclick="getLocation();">내 위치 가져오기</button>
             <button type="submit">근처 WIFI 정보 보기</button>
         </form>
+        
+        
+        <!-- 위치 히스토리 저장한게 history db로 저장되지 않음. -->
 
         <%
             // LAT와 LNT 값을 가져옴
@@ -33,8 +36,8 @@
                 double lat = Double.parseDouble(latParam);
                 double lnt = Double.parseDouble(lntParam);
 
-              /*   // 위치 히스토리 저장
-                WifiService.saveHistory(lat, lnt); */
+                // 위치 히스토리 저장
+                WifiService.saveHistory(lat, lnt); 
 
                 // WifiService를 이용해 근처 와이파이 정보 가져오기
                 List<WifiData> wifiList = WifiService.getNearbyWifi(lnt, lat);

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,13 +242,15 @@ public class WifiService {
 
 	// 히스토리 생성
 	public static void saveHistory(double lat, double lnt) {
-        String sql = "INSERT INTO HISTORY (LAT, LNT, CREATED_TIME) VALUES (?, ?, NOW())";
+        String sql = "INSERT INTO HISTORY (LAT, LNT, CREATED_TIME) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDouble(1, lat);
             preparedStatement.setDouble(2, lnt);
+            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis())); 
+
 
             preparedStatement.executeUpdate();
 

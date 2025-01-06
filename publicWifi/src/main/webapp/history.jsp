@@ -18,7 +18,7 @@
 			<a href="history.jsp">위치 히스토리 목록</a>
 			<a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 		</div>
-		<form>
+		<form action="list.jsp" method="get">
 			LNT : <input type="text" placeholder="LNT: 0.0" name="lnt" id="lnt" value="<%= request.getParameter("lnt") != null ? request.getParameter("lnt") : "" %>" readonly>
 			LAT : <input type="text" placeholder="LAT: 0.0" name="lat" id="lat" value="<%= request.getParameter("lat") != null ? request.getParameter("lat") : "" %>" readonly> 
 			<button type="button" onclick="getLocation();">내 위치 가져오기</button>
@@ -50,7 +50,7 @@
             <td><%= history.getLnt() %></td>
             <td><%= history.getLat() %></td>
             <td><%= history.getCreatedTime() %></td>
-            <td><button onclick="deleteHistory(<%= history.getId() %>)">삭제</button></td>
+            <td><button onclick="deleteHistory(<%= history.getId() %>);">삭제</button></td>
         </tr>
         <%
                 }
@@ -69,20 +69,6 @@
 </body>
 
 <script>
-
-//히스토리 삭제 함수
-function deleteHistory(historyId) {
-	if (confirm("정말로 삭제하시겠습니까?")) {
-		// 서버로 삭제 요청을 보내는 AJAX 요청
-		fetch('deleteHistory.jsp?id=' + historyId)
-			.then(response => response.text())
-			.then(data => {
-				alert(data);
-				location.reload(); // 페이지 새로 고침 (삭제된 내용 반영)
-			})
-			.catch(error => console.error('Error:', error));
-	}
-}
 
     // 사용자의 위치를 가져오는 함수
     function getLocation() {
@@ -104,7 +90,7 @@ function deleteHistory(historyId) {
         document.getElementById("lat").value = lat;
        
         // 위치 정보를 서버로 전송하여 DB에 저장
-        fetch("list.jsp?lat=" + lat + "&lnt=" + lnt)
+        fetch("history.jsp?lat=" + lat + "&lnt=" + lnt)
             .then(response => response.text())
             .then(data => console.log(data)); // 서버 응답 출력 (디버깅용)
     }
@@ -126,5 +112,37 @@ function deleteHistory(historyId) {
                 break;
         }
     }
+
+    // 히스토리 삭제 함수
+    function deleteHistory(historyId) {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            // 서버로 삭제 요청을 보내는 fetch 요청
+            fetch('history.jsp?action=delete&id=' + historyId)
+                .then(response => response.text())
+                .then(data => {
+                    location.reload(); // 페이지 새로 고침 (삭제된 내용 반영)
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
 </script>
 </html>
+
+<%
+    // 히스토리 삭제 처리
+    String action = request.getParameter("action");
+    if ("delete".equals(action)) {
+        String idParam = request.getParameter("id");
+        if (idParam != null) {
+            try {
+                int historyId = Integer.parseInt(idParam);
+                WifiService.deleteHistory(historyId);  // 히스토리 삭제 메서드 호출
+                out.print("삭제되었습니다.");
+            } catch (NumberFormatException e) {
+                out.print("유효하지 않은 ID입니다.");
+            }
+        } else {
+            out.print("ID 파라미터가 없습니다.");
+        }
+    }
+%>
