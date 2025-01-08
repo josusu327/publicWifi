@@ -10,6 +10,63 @@
 <meta charset="UTF-8">
 <title>와이파이 정보 구하기</title>
 </head>
+
+<style>
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	padding: 10px;
+}
+
+.nav-links {
+	margin-bottom: 20px;
+}
+
+.nav-links a:hover {
+	text-decoration: underline;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+button {
+	cursor: pointer;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+table, th, td {
+	border: 1px solid #ccc;
+}
+
+th {
+	background-color: #00AE67;
+	color: white;
+	padding: 10px;
+}
+
+td {
+	padding: 8px;
+}
+
+tr td:nth-child(5) {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.empty-message {
+	color: black;
+}
+</style>
+
 <body>
 	<div class="container">
 		<h1>위치 히스토리 목록</h1>
@@ -18,18 +75,11 @@
 			<a href="history.jsp">위치 히스토리 목록</a>
 			<a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 		</div>
-		<form action="list.jsp" method="get">
-			LNT : <input type="text" placeholder="LNT: 0.0" name="lnt" id="lnt" value="<%= request.getParameter("lnt") != null ? request.getParameter("lnt") : "" %>" readonly>
-			LAT : <input type="text" placeholder="LAT: 0.0" name="lat" id="lat" value="<%= request.getParameter("lat") != null ? request.getParameter("lat") : "" %>" readonly> 
-			<button type="button" onclick="getLocation();">내 위치 가져오기</button>
-			<button type="submit">근처 WIFI 정보 보기</button>
-		</form>
-
+		
 		<%
-    // 히스토리 목록 가져오기
-    List<History> historyList = WifiService.getHistoryList();
-%>
-<h2>히스토리 목록</h2>
+				// 히스토리 목록 가져오기
+				List<History> historyList = WifiService.getHistoryList();
+				%>
 <table>
     <thead>
         <tr>
@@ -57,7 +107,7 @@
             } else {
         %>
         <tr>
-            <td colspan="5">저장된 히스토리가 없습니다.</td>
+            <td colspan="5" class="empty-message">저장된 히스토리가 없습니다.</td>
         </tr>
         <%
             }
@@ -69,49 +119,6 @@
 </body>
 
 <script>
-
-    // 사용자의 위치를 가져오는 함수
-    function getLocation() {
-        if (navigator.geolocation) {
-            // 위치 요청
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            alert("이 브라우저는 Geolocation을 지원하지 않습니다.");
-        }
-    }
-
-    // 위치를 성공적으로 가져왔을 때 실행되는 함수
-    function showPosition(position) {
-        const lnt = position.coords.longitude;  // 경도-->x
-        const lat = position.coords.latitude;  // 위도-->y
-
-        // LAT와 LNT 필드에 값 채우기
-        document.getElementById("lnt").value = lnt;
-        document.getElementById("lat").value = lat;
-       
-        // 위치 정보를 서버로 전송하여 DB에 저장
-        fetch("history.jsp?lat=" + lat + "&lnt=" + lnt)
-            .then(response => response.text())
-            .then(data => console.log(data)); // 서버 응답 출력 (디버깅용)
-    }
-
-    // 위치를 가져오는 데 실패했을 때 실행되는 함수
-    function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                alert("위치 정보 제공이 거부되었습니다.");
-                break;
-            case error.POSITION_UNAVAILABLE:
-                alert("위치 정보를 사용할 수 없습니다.");
-                break;
-            case error.TIMEOUT:
-                alert("위치 요청 시간이 초과되었습니다.");
-                break;
-            case error.UNKNOWN_ERROR:
-                alert("알 수 없는 오류가 발생했습니다.");
-                break;
-        }
-    }
 
     // 히스토리 삭제 함수
     function deleteHistory(historyId) {

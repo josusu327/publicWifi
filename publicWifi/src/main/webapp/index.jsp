@@ -6,6 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>와이파이 정보 구하기</title>
 </head>
+
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+           padding: 10px;
+        }
+        
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            cursor: pointer;
+        }
+       
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #00AE67;
+            color : white;
+            padding: 10px;
+        }
+        td {
+            padding: 20px;
+            text-align: center;
+        }
+        .empty-message {
+            color: black;
+        }
+    </style>
+
 <body>
     <div class="container">
     <h1>와이파이 정보 구하기</h1>

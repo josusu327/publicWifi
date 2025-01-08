@@ -9,6 +9,49 @@
     <meta charset="UTF-8">
     <title>와이파이 정보 구하기</title>
 </head>
+
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+           padding: 10px;
+        }
+        
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            cursor: pointer;
+        }
+       
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #00AE67;
+            color : white;
+            padding: 10px;
+        }
+        td {
+            padding: 5px;
+        }
+    </style>
+
 <body>
     <div class="container">
         <h1>와이파이 정보 구하기</h1>
@@ -55,7 +98,7 @@
                     <th>자치구</th>
                     <th>와이파이명</th>
                     <th>도로명주소</th>
-                    <th>상세주소</th>
+                    <th width="15%">상세주소</th>
                     <th>설치위치(층)</th>
                     <th>설치유형</th>
                     <th>설치기관</th>
